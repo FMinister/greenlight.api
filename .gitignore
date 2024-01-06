@@ -23,4 +23,5 @@ go.work
 tmp/
 .env
 database/
+_database/
 *.pem
