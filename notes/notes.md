@@ -44,4 +44,18 @@ cd ./tls
 go run <GO PATH>src/crypto/tls/generate_cert.go --rsa-bits=2048 --host=localhost
 ```
 
+DB migrations:
+
+The password can be encoded with this small Python line (use only the password, not the whole connection string):
+
+```bash
+python3 -c 'import urllib.parse; print(urllib.parse.quote(input("String to encode: "), ""))'
+```
+
+After that, you can run the migration:
+
+```bash
+migrate -path ./migrations -database "postgres://<username>:<password>@<url>:<port>/<dbname>?sslmode=disable" up
+```
+
 ## Notes for Postgres
