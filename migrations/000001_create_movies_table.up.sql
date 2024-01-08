@@ -7,3 +7,6 @@ CREATE TABLE IF NOT EXISTS movies (
     genres text[] NOT NULL,
     version integer NOT NULL DEFAULT 1
 );
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE movies TO web;
+GRANT USAGE, SELECT ON SEQUENCE movies_id_seq TO web;
