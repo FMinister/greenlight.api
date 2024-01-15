@@ -58,4 +58,26 @@ After that, you can run the migration:
 migrate -path ./migrations -database "postgres://<username>:<password>@<url>:<port>/<dbname>?sslmode=disable" up
 ```
 
+## Notes for migrate
+
+Create a new migration:
+
+```bash
+migrate create -ext sql -dir ./migrations -seq <migration-name>
+```
+
+Push migration to the database:
+
+```bash
+migrate -path ./migrations -database "postgres://<username>:<password>@<url>:<port>/<dbname>?sslmode=disable" up
+```
+
+If something went wrong, fix the migration, force to the previous version and then push again:
+
+```bash
+migrate -path ./migrations -database "postgres://<username>:<password>@<url>:<port>/<dbname>?sslmode=disable" force <version id>
+
+migrate -path ./migrations -database "postgres://<username>:<password>@<url>:<port>/<dbname>?sslmode=disable" up
+```
+
 ## Notes for Postgres
