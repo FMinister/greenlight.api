@@ -75,11 +75,11 @@ func main() {
 
 	flag.Parse()
 
-	logger := slog.New(slog.NewTextHandler(os.Stderr, nil))
-	// logger := slog.New(slog.NewJSONHandler(os.Stderr, &slog.HandlerOptions{
-	// 	Level:     slog.LevelDebug,
-	// 	AddSource: true,
-	// }))
+	// logger := slog.New(slog.NewTextHandler(os.Stderr, nil))
+	logger := slog.New(slog.NewJSONHandler(os.Stderr, &slog.HandlerOptions{
+		Level:     slog.LevelDebug,
+		AddSource: true,
+	}))
 
 	db, err := openDB(cfg)
 	if err != nil {
