@@ -97,6 +97,8 @@ func main() {
 		mailer: mailer.New(cfg.smtp.host, cfg.smtp.port, cfg.smtp.username, cfg.smtp.password, cfg.smtp.sender),
 	}
 
+	go app.backgroundDeleteExpiredTokens()
+
 	err = app.serve()
 	if err != nil {
 		logger.Error(err.Error())

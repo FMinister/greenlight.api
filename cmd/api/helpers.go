@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/FMinister/greenlight.api/internal/validator"
 	"github.com/julienschmidt/httprouter"
@@ -148,4 +149,17 @@ func (app *application) background(fn func()) {
 
 		fn()
 	}()
+}
+
+func (app *application) backgroundDeleteExpiredTokens() {
+	tick := time.NewTicker(10 * time.Second)
+	defer tick.Stop()
+
+	for range tick.C {
+		app.logger.Info("deleting old tokens")
+		err := app.models.Tokens.DeleteExpiredTokens()
+		if err != nil {
+			app.logger.Error(fmt.Sprintf("%v", err))
+		}
+	}
 }

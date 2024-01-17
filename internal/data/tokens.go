@@ -92,3 +92,16 @@ func (m TokenModel) DeleteAllForUser(scope string, userID int64) error {
 
 	return err
 }
+
+func (m TokenModel) DeleteExpiredTokens() error {
+	query := `
+		DELETE FROM tokens
+		WHERE expiry < CURRENT_TIMESTAMP`
+
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	_, err := m.DB.ExecContext(ctx, query)
+
+	return err
+}
