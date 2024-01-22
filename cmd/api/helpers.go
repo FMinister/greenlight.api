@@ -154,12 +154,20 @@ func (app *application) background(fn func()) {
 func (app *application) backgroundDeleteExpiredTokens() {
 	tick := time.NewTicker(10 * time.Second)
 	defer tick.Stop()
+	app.wg.Add(1)
+	defer app.wg.Done()
 
-	for range tick.C {
-		app.logger.Info("deleting old tokens")
-		err := app.models.Tokens.DeleteExpiredTokens()
-		if err != nil {
-			app.logger.Error(fmt.Sprintf("%v", err))
+	for {
+		select {
+		case <-tick.C:
+			app.logger.Info("deleting old tokens")
+			err := app.models.Tokens.DeleteExpiredTokens()
+			if err != nil {
+				app.logger.Error(fmt.Sprintf("%v", err))
+			}
+		case <-app.quit:
+			app.logger.Info("received shutdown signal, stopping background task 'DeleteExpiredTokens'")
+			return
 		}
 	}
 }

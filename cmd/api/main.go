@@ -48,6 +48,7 @@ type application struct {
 	models data.Models
 	mailer mailer.Mailer
 	wg     sync.WaitGroup
+	quit   chan struct{}
 }
 
 func main() {
@@ -95,9 +96,10 @@ func main() {
 		logger: logger,
 		models: data.NewModels(db),
 		mailer: mailer.New(cfg.smtp.host, cfg.smtp.port, cfg.smtp.username, cfg.smtp.password, cfg.smtp.sender),
+		quit:   make(chan struct{}),
 	}
 
-	go app.backgroundDeleteExpiredTokens()
+	app.background(app.backgroundDeleteExpiredTokens)
 
 	err = app.serve()
 	if err != nil {
