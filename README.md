@@ -7,3 +7,5 @@ This project is a work in progress and is not yet ready for production use. Plea
 ## Overview
 
 Greenlight Movie API is a Go-based application designed to provide a JSON API for retrieving and managing information about movies. The project follows a start-to-finish build approach, resembling the core functionality of the Open Movie Database API. The application is backed by a PostgreSQL database to store and manage movie-related data.
+
+:)
