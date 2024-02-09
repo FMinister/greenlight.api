@@ -15,13 +15,15 @@ import (
 
 	"github.com/FMinister/greenlight.api/internal/data"
 	"github.com/FMinister/greenlight.api/internal/mailer"
+	"github.com/FMinister/greenlight.api/internal/vcs"
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
-// currently hardcoded, will be changed later
-const version = "1.0.0"
+var (
+	version = vcs.Version()
+)
 
 type config struct {
 	port int
