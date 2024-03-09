@@ -152,11 +152,7 @@ func (app *application) background(fn func()) {
 }
 
 func (app *application) backgroundDeleteExpiredTokens() {
-<<<<<<< HEAD
 	tick := time.NewTicker(time.Hour)
-=======
-	tick := time.NewTicker(10 * time.Minute)
->>>>>>> b4b7bebe0bf039271b023f27da4540699ffc1432
 	defer tick.Stop()
 	app.wg.Add(1)
 	defer app.wg.Done()
